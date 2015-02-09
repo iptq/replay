@@ -1,7 +1,34 @@
 <html>
 	<head>
 		<title>Replay</title>
+		<link rel="stylesheet" href="css/main.css" />
 	</head>
 	<body>
+		<table id="main_container">
+			<tr>
+				<td>
+					<h1>Upload Replay</h1>
+					<p>
+						<input type="file" id="files" name="files[]" />
+					</p>
+					<pre id="console"></pre>
+				</td>
+				<td>
+					<!-- canvas -->
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<!-- video encoding status -->
+				</td>
+				<td>
+					<!-- metadata -->
+				</td>
+			</tr>
+		</table>
+		<script type="text/javascript" src="lib/lzma.min.js"></script>
+		<script type="text/javascript" src="js/util.js"></script>
+		<script type="text/javascript" src="js/replay.js"></script>
+		<script type="text/javascript" src="js/upload.js"></script>
 	</body>
 </html>
