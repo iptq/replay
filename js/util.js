@@ -1,5 +1,5 @@
 var debug = function(msg) {
-	document.getElementById("console").innerText += msg + "\n";
+	$("#console").html($("#console").html() + msg + "<br />");
 };
 
 var toInt = function(arr, endianness) {

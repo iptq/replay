@@ -9,7 +9,7 @@ var uploadListener = function(e) {
 				return value.charCodeAt(0); // pad(value.charCodeAt(0).toString(16), 2, "0").toUpperCase();
 			});
 			R.Parse(data, function(data) {
-				R.ReplayData = data;
+				R.ReplayData = R.ParseReplayData(data);
 				console.log(R);
 			});
 		};

@@ -88,11 +88,36 @@ var Replay = function() {
 		return new Date(date);
 	};
 
-	this.ParseReplayData = function(data, callback) {
+	this.ParseReplayKeys = function(keys) {
+		return {
+			M1: (keys & 1) == 1,
+			M2: (keys & 2) == 2,
+			K1: (keys & 5) == 5,
+			K2: (keys & 10) == 10
+		};
+	};
+
+	this.ParseReplayData = function(data) {
+		var result = [];
+		var data2 = data.split(",");
+		for(var i=0; i<data2.length; i++) {
+			var parts = data2[i].split("|");
+			result.push({
+				w: parseInt(parts[0]),
+				x: parseInt(parts[1]),
+				y: parseInt(parts[2]),
+				z: this.ParseReplayKeys(parseInt(parts[3])),
+			});
+		}
+		return result;
+	};
+
+	this.ParseLZMAData = function(data, callback) {
+		debug("<span id='decompress_percent'>Decompressing...</span>");
 		LZMA.decompress(data, function(result) {
 			callback(result);
 		}, function(percent) {
-			console.log(percent);
+			$("#decompress_percent").html("Decompressing " + Math.round(percent * 10000) / 100 + "%.");
 		});
 	};
 
@@ -142,7 +167,7 @@ var Replay = function() {
 
 		this.ReplayDataLength = this.ReadULEB();
 		this.ReadUntil([ 0x5D, 0x00, 0x00 ]);
-		this.ParseReplayData(this.program.slice(this.position), function(replayData) {
+		this.ParseLZMAData(this.program.slice(this.position), function(replayData) {
 			console.log("Done parsing.");
 			callback(replayData);
 		});
